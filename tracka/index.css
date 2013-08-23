@@ -1,0 +1,72 @@
+body {
+    background-color: #DDDDDD;
+}
+.container
+{
+    position:relative;
+}
+
+.code{
+    background-color:#DADADA;
+    display: inline-block;
+    clear:both;
+    margin-left:50px;
+}
+.select-code-button {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}
+
+.totals
+{
+    float:left;
+    margin-right:85px;
+    background-color:#D5D5D5;
+    display:inline-block;
+    vertical-align:middle;
+    padding:5px;
+    padding-top:0px;
+}
+.track {
+    background-color:#D5D5D5;
+    display:inline-block;
+    clear:both;
+}
+.divider {
+    background-color:#FFFFFF;
+}
+
+.toolbox {
+    background-color:#D5D5D5;
+    display:inline-block;
+    padding-right: 25px;
+    padding-left: 25px;
+    text-align: center;
+}
+
+.jsBoxLabel {
+    vertical-align: middle;
+    padding-right: 5px;
+}
+.jsBox {
+    vertical-align: middle;
+}
+
+.scannerForm
+{
+    background-color:#D5D5D5;
+    float:left;
+}
+.scanResults {
+    background-color: #D5D5D5;
+    margin-top: 1em;
+    float: left;
+    clear: both;
+}
+
+.remove-button {
+    cursor: pointer;
+    color: blue;
+    text-decoration: underline;
+}

@@ -1,0 +1,30 @@
+Visitor Tracker
+ebol4anthr4x
+Version 1.0
+-------------------
+
+To install:
+
+Prereqs:
+-PHP >= 5
+-JQuery (included)
+-MySQL >= 5
+*GeoIPOrg.dat and GeoIPISP.dat and GeoLiteCity.dat for location and ISP tracking
+*AYAH public and score keys
+
+* = optional
+
+Use the /tracker.sql file to import the database structure.
+Set up /inc/config.php and /inc/ayah/ayah_config.php with valid values.
+
+---------------------
+
+Changelog:
+v1.0 -
+	Inital release
+
+--------------------
+
+TODO: 
+	-Remove all instances of MetalMetalLand.com from the files, use global variable for website.
+	-Various other features such as visitor labeling, graphs, better statistics pages, search feature.
