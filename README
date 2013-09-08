@@ -22,8 +22,13 @@ Set up /inc/config.php and /inc/ayah/ayah_config.php with valid values.
 Changelog:
 v1.0 -
 	Inital release
-
+v1.01 -
+	Universally usable release
+	
 --------------------
+
+Known Issues:
+-Adblock+'s EasyPrivacy list breaks the website. It also opts people out of tracking (this part isn't an issue).
 
 TODO: 
 	-Various other features such as visitor labeling, graphs, better statistics pages, search feature.
