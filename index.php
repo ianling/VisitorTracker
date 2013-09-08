@@ -20,13 +20,13 @@ if(!isset($_SESSION['email'])) {
 
 
     echo "<link rel='stylesheet' type='text/css' href='tracka/index.css'>";
-    echo "<script type='text/javascript' src='tracka/index.js'></script>";
+    echo "<script type='text/javascript' src='index.js'></script>";
 	echo "MetalMetalLand Visitor Tracker<br><br>";
 	echo "<a href='login/'>LOGIN</a> | <a href='register/'>REGISTER</a><br><br>";
     echo "<b>DEMO</b>:<br><div class='track'>".
 	      date('F jS, Y g:i:s A')."<br>
-          <div id='referrer'>Referrer: </div>
-          <div id='currentPage'>Landed: <a href='https://www.metalmetalland.com/tracker/'>https://www.metalmetalland.com/tracker</a></div>
+          <div id='referrer'></div>
+          <div id='currentPage'></div>
           <div id='ip'>IP: $ipAddress</div>
           <div id='isp'>ISP: $isp</div>
 	      <div id='location'>Location: $ipLocation</div>
@@ -35,6 +35,6 @@ if(!isset($_SESSION['email'])) {
 	      </div>";
 }
 else {
-    header("Location: https://www.metalmetalland.com/tracker/tracka/?page=1");
+    header("Location: ".$BASE_HOST."/tracka/?page=1");
 }
 ?>

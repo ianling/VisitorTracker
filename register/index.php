@@ -1,4 +1,4 @@
-<head><title>MetalMetalLand Tracker</title></head>
+<head><title>Visitor Tracker</title></head>
 <?php
 require_once("../inc/ayah/ayah.php");
 $ayah = new AYAH();
@@ -36,29 +36,6 @@ if(isset($_POST['save'])) {
             $addUserQuery = $db->prepare("INSERT INTO track_users (email,password,salt,timezone) VALUES (?,?,?,?)");
             $addUserQuery->execute(array($email,$pass,$salt,$timezone));
 
-            /*  ****WE DON'T HAVE AN SMTP SERVER LOL
-            //Now we must send them a confirmation email
-            $mail = new PHPMailer();
-            $mail->IsSMTP();
-            $mail->SMTPDebug = 2;
-
-            $mail->SMTPAuth = true;
-            $mail->Host = "mail.metalmetalland.com";
-            $mail->Port = 25;
-            $mail->Username = "noreply";
-            $mail->Password = "noreplypl0x";
-
-            $mail->SetFrom('noreply@metalmetalland.com', 'MetalMetalLand Tracker');
-            $mail->AddReplyTo("noreply@metalmetalland.com", 'MetalMetalLand Tracker');
-            $mail->Subject = "Confirm your email address! - MetalMetalLand Tracker";
-            $body = "You, or someone who knows your email address, used your email address to sign you up for an account on the Metal Metal Land Tracker.\n\nClick on the following link to confirm that you meant to sign up: http://www.metalmetalland.com/tracker/activate.php?JrKQ=".$activation_kay." \nIf you didn't sign up for this account, just ignore this email. We won't send you any more.";
-            $mail->MsgHTML($body);
-
-            $mail->AddAddress($meeru, "New Member");
-            echo !$mail->Send() ? "Mailer Error: " . $mail->ErrorInfo : "Message sent!";
-
-            echo "<br><br>For the love of God and all that is holy, <b>check your spam folder.</b><br><a href=http://tracker.metalmetalland.com>Back to the main page.</a>";
-            */
             echo "You've successfully registered. <a href='../login'>Click here to go log in.</a>";
         }
     }

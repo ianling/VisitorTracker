@@ -1,8 +1,8 @@
 <?php
 // Edit the two lines below to use the keys for your site.
 // (Note: you can find your keys at http://portal.areyouahuman.com/dashboard)
-define( 'AYAH_PUBLISHER_KEY', 'AYAH PUB KEY');
-define( 'AYAH_SCORING_KEY', 'AYAH SCORE KEY');
+define( 'AYAH_PUBLISHER_KEY', 'Fill me in');
+define( 'AYAH_SCORING_KEY', 'hahaha');
 
 
 // Set defaults for values needed by the ayah.php file.

@@ -17,7 +17,7 @@ if(!isset($pageNumber) || !is_numeric($pageNumber) || strlen($pageNumber) < 1 ||
 	$pageNumber = 1; //set page number to 1 if they entered something weird like 0 or 999
 }
 if(count($allSites) == 0) //They just registered or something!
-    header("Location: https://www.metalmetalland.com/tracker/tracka/settings.php?command=modifysites");
+    header("Location: ".$BASE_HOST."/tracker/tracka/settings.php?command=modifysites");
 
 if(count($_GET['sites']) == 0 && count($allSites) != 0)  //They didn't select anything, but they had stuff to choose from
     $selectedSites[] = $allSites[0]['id']; //This will also happen the first time the page is loaded after logging in or something

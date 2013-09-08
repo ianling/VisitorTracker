@@ -1,7 +1,7 @@
 <?php
 require_once('../inc/default_header.php');
 if(!isset($_SESSION['email'])){
-    gotoIndex();
+    header('Location: '.$BASE_HOST);
 }
 $email = $_SESSION['email'];
 $userID = $_SESSION['userID'];

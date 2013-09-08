@@ -1,13 +1,5 @@
 $(function() {
-    //**MAIN INDEX**
-    var ref = "Referrer: <a href='"+document.referrer+"'>"+document.referrer+"</a>";
-    if (ref.indexOf("'></a>") > -1)
-        ref = "Referrer: N/A";
-
-    $('#referrer').html(ref);
-    $('#res').html("Resolution: "+screen.width+"x"+screen.height);
-
-    //**settings.php**
+//**settings.php**
     $('.select-code-button').click(function() {
         $(this).siblings('.code').selectText();
     });

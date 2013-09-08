@@ -5,7 +5,7 @@ echo "<link rel='stylesheet' type='text/css' href='index.css'>";
 echo "<script type='text/javascript' src='index.js'></script>";
 $command = $_GET['command'];
 if(!isset($command) && !isset($_POST['save']))
-    gotoIndex();
+    header('Location: '.$BASE_HOST);
 else if ($command == "modifysites") { //adding a site to the user's account
     $siteListQuery = $db->prepare("SELECT * FROM track_sites WHERE userID=?");
     $siteListQuery->execute(array($userID));
@@ -19,12 +19,12 @@ else if ($command == "modifysites") { //adding a site to the user's account
                                                                    <a href='settings.php?command=removesite&site=$siteIndex'>[Remove]</a><br>";
         echo "<div class='code'>
             <pre>
-&lt;!-- Begin MetalMetalLand Tracker Code --&gt;
+&lt;!-- Begin Visitor Tracker Code --&gt;
 
 &lt;script type=\"text/javascript\" src=\"http://code.jquery.com/jquery-1.10.2.min.js\"&gt;&lt;/script&gt;
-&lt;script type=\"text/javascript\" src=\"https://www.metalmetalland.com/tracker/trackerJS.php?userID=$userID&site=$siteIndex\"&gt;&lt;/script&gt;
+&lt;script type=\"text/javascript\" src=\"".$BASE_HOST."/trackerJS.php?userID=$userID&site=$siteIndex\"&gt;&lt;/script&gt;
 
-&lt;!-- End MetalMetalLand Tracker Code --&gt;</pre>
+&lt;!-- End Visitor Tracker Code --&gt;</pre>
         </div></div><br>";
     } //All existing sites have been displayed
     echo "</div>";
@@ -59,7 +59,7 @@ else if($command == "addsite" && isset($_POST['sitename']) && isset($_POST['save
 
     $insertNewSiteQuery = $db->prepare("INSERT INTO track_sites (userID,siteName) VALUES (?,?)");
     $insertNewSiteQuery->execute(array($userID,$_POST['sitename']));
-    header("Location: https://www.metalmetalland.com/tracker/tracka/settings.php?command=modifysites");
+    header("Location: ".$BASE_HOST."/tracka/settings.php?command=modifysites");
 }
 
 //REMOVE SITE
@@ -71,7 +71,7 @@ else if($command == "removesite" && isset($_GET['site'])) {
     $removeSiteVisitorsQuery = $db->prepare("DELETE FROM track_visitors WHERE userID=? AND siteID=?");
     $removeSiteVisitorsQuery->execute(array($userID,$_GET['site']));
 
-    header("Location: https://www.metalmetalland.com/tracker/tracka/settings.php?command=modifysites");
+    header("Location: ".$BASE_HOST."/tracka/settings.php?command=modifysites");
 }
 
 //RENAME SITE

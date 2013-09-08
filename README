@@ -9,7 +9,7 @@ Prereqs:
 -PHP >= 5
 -JQuery (included)
 -MySQL >= 5
-*GeoIPOrg.dat and GeoIPISP.dat and GeoLiteCity.dat for location and ISP tracking
+*GeoIPOrg.dat and GeoLiteCity.dat for location and ISP tracking
 *AYAH public and score keys
 
 * = optional
@@ -26,5 +26,5 @@ v1.0 -
 --------------------
 
 TODO: 
-	-Remove all instances of MetalMetalLand.com from the files, use global variable for website.
 	-Various other features such as visitor labeling, graphs, better statistics pages, search feature.
+	-Allow excluding certain visitors from results.

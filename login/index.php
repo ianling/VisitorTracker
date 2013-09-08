@@ -49,7 +49,7 @@ else { //the user has posted data
             //Send the session key to the database for checking purposes
             //$upload_the_key = mysql_query("UPDATE track_users SET sessionKay='$sessionkeyf0rdb' WHERE id='$id'");
 
-            gotoIndex();
+            header('Location: '.$BASE_HOST);
         //}
         //else if($activated_or_not == "0") {
         //    die("The account has not yet been activated! Check your Spam folder if you didn't receive the activation email!");
