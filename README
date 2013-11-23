@@ -1,6 +1,6 @@
 Visitor Tracker
 ebol4anthr4x
-Version 1.0
+Version 1.1
 -------------------
 
 To install:
@@ -24,12 +24,13 @@ v1.0 -
 	Inital release
 v1.01 -
 	Universally usable release
+v1.1 -
+	Added IP labels, fixed a couple bugs. Can also exclude IP's from tracking now.
 	
 --------------------
 
 Known Issues:
--Adblock+'s EasyPrivacy list breaks the website. It also opts people out of tracking (this part isn't an issue).
+-Adblock+'s EasyPrivacy list breaks the website. It also opts people out of tracking (as it should).
 
 TODO: 
-	-Various other features such as visitor labeling, graphs, better statistics pages, search feature.
-	-Allow excluding certain visitors from results.
+	-Various other features such as graphs, better statistics pages, search feature.
