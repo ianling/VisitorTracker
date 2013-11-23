@@ -3,6 +3,7 @@ session_start();
 require_once('header.php');
 echo "<link rel='stylesheet' type='text/css' href='index.css'>";
 echo "<script type='text/javascript' src='index.js'></script>";
+echo '<script type="text/javascript" src="../inc/jscolor/jscolor.js"></script>';
 
 $timezone = $_SESSION['timezone'];
 $pageNumber = (isset($_GET['page']) ? $_GET['page'] : 1);
@@ -17,7 +18,7 @@ if(!isset($pageNumber) || !is_numeric($pageNumber) || strlen($pageNumber) < 1 ||
 	$pageNumber = 1; //set page number to 1 if they entered something weird like 0 or 999
 }
 if(count($allSites) == 0) //They just registered or something!
-    header("Location: ".$BASE_HOST."/tracker/tracka/settings.php?command=modifysites");
+    header("Location: ".$BASE_HOST."/tracka/settings.php?command=modifysites");
 
 if(count($_GET['sites']) == 0 && count($allSites) != 0)  //They didn't select anything, but they had stuff to choose from
     $selectedSites[] = $allSites[0]['id']; //This will also happen the first time the page is loaded after logging in or something
@@ -41,6 +42,8 @@ else { //Sanity check for the user's inputted sites
 //Need to escape these just in case because PDO can't handle arrays, could be vulnerable to SQLi
 foreach($selectedSites as &$unescapedSite)
     $unescapedSite = mysql_real_escape_string($unescapedSite);
+
+$nextPageSitesLink = "&sites%5B%5D=".join('&sites%5B%5D=',$selectedSites);
 
 $siteIDsJoined = join(',',$selectedSites);
 
@@ -92,22 +95,30 @@ echo "</form></div>";
 
 $resultsMin = 1+20*($pageNumber-1);
 $resultsMax = 20*$pageNumber;
-echo "<br><br><br><div id='container'>You're on page <b>$pageNumber</b> of your visits. Currently viewing visits <b>$resultsMin-$resultsMax</b>.";
+echo "<br><br><div id='container'>You're on page <b>$pageNumber</b> of your visits. Currently viewing visits <b>$resultsMin-$resultsMax</b>.";
 echo " <a href=index.php?page=";
 $nextPage = $pageNumber+1;
-echo "$nextPage>Older Visits</a> / ";
+echo "$nextPage".$nextPageSitesLink.">Older Visits</a> / ";
 if($pageNumber == 1) {
 	echo "<i>Newer Visits</i><br>";
 }else{
 	echo "<a href=index.php?page=";
 	$previousPage = $pageNumber-1;
-	echo "$previousPage>Newer Visits</a><br>";
+	echo "$previousPage".$nextPageSitesLink.">Newer Visits</a><br>";
 }
 $queryResultsMin = $resultsMin-1;
 
 $trackGetterQuery = $db->prepare("SELECT * FROM track_visitList WHERE userID=? AND siteID IN ($siteIDsJoined) ORDER BY id DESC LIMIT ?, 20");
 $trackGetterQuery->execute(array($userID,$queryResultsMin));
 while($row = $trackGetterQuery->fetch()){
+    $labelGetterQuery = $db->prepare("SELECT * FROM track_labels WHERE userID=? AND ipAddress=?");
+    $labelGetterQuery->execute(array($userID,$row['ipAddress']));
+    $labelRow = $labelGetterQuery->fetch();
+
+    if($labelRow['label'] == "" || !isset($labelRow['label']))
+        $label = "Δ";
+    else
+        $label = $labelRow['label'];
     $siteName = "";
     $date = new DateTime("@".$row['unixTime']);
     $userTZ = new DateTimeZone($timezone);
@@ -119,28 +130,40 @@ while($row = $trackGetterQuery->fetch()){
             break 1;
         }
     }
-	echo "<div class='divider'><hr></div>
-          <div class='track'>".
-	      $date->format('F jS, Y g:i:s A')."<br>
-          Site: <i>$siteName</i><br>
-	      Referrer: <a href='$row[referrer]'>$row[referrer]</a><br>
-	      Landed: <a href='$row[currentPage]'>$row[currentPage]</a><br>
-	      IP: <a href='statistics.php?ip=$row[ipAddress]'>$row[ipAddress]</a> <span class='optionsButton'></span><br>
-	      ISP: $row[ISP]<br>
-	      Location: $row[ipLocation]<br>
-	      Browser: $row[browser] on $row[operatingSystem]<br>
-	      Resolution: $row[screenW]x$row[screenH]<br>
-	      </div><br>";
+    if (strlen($labelRow['textColor']) == 6) {
+        $textColor = $labelRow['textColor'];
+        $bgColor = $labelRow['color'];
+    }
+    else {
+        $textColor = "000000";
+        $bgColor = "D5D5D5";
+    }
+	echo "<div class='divider'><hr></div>".
+          "<div data-ip-address='$row[ipAddress]' class='track' style='color:#$textColor; background-color:#$bgColor'>".
+	      $date->format('F jS, Y g:i:s A')."<br>".
+          "Site: <i>$siteName</i><br>".
+	      "Referrer: <a href='$row[referrer]'>$row[referrer]</a><br>".
+	      "Landed: <a href='$row[currentPage]'>$row[currentPage]</a><br>".
+	      "IP: <a href='statistics.php?ip=$row[ipAddress]'>$row[ipAddress]</a> <span class='display-label-options'>[$label]</span><span class='ipLabelSettings'>Label: <input class='iplabelbox' ";
+          if($label === "Δ") echo "placeholder='My Best Friend'/><br>";
+          else echo "value='$label'/><br>";
+    echo "Background Color: <input id='bgcolor' class='color {onImmediateChange:\"updateBGColor(this, $(this));\"}' value='#$bgColor'/><br>Text Color: <input id='textcolor' class='color {onImmediateChange:\"updateTextColor(this, $(this));\"}' value='#$textColor'/><br><button class='save-button'>Save</button> <button class='reset-button'>Reset</button>";
+    echo  "</span><br>".
+	      "ISP: $row[ISP]<br>".
+	      "Location: $row[ipLocation]<br>".
+	      "Browser: $row[browser] on $row[operatingSystem]<br>".
+	      "Resolution: $row[screenW]x$row[screenH]<br>".
+	      "</div><br>";
 }
-echo "<div class='divider'><hr></div>";
-echo " <a href=index.php?page=";
+echo "<div class='divider'><hr></div>".
+     " <a href=index.php?page=";
 $nextPage = $pageNumber+1;
-echo "$nextPage>Older Visits</a> / ";
+echo "$nextPage".$nextPageSitesLink.">Older Visits</a> / ";
 if($pageNumber == 1) {
     echo "<i>Newer Visits</i><br>";
 }else{
     echo "<a href=index.php?page=";
     $previousPage = $pageNumber-1;
-    echo "$previousPage>Newer Visits</a><br>";
+    echo "$previousPage".$nextPageSitesLink.">Newer Visits</a><br>";
 }
 require_once('footer.php');

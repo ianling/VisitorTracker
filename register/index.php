@@ -36,6 +36,7 @@ if(isset($_POST['save'])) {
             $addUserQuery = $db->prepare("INSERT INTO track_users (email,password,salt,timezone) VALUES (?,?,?,?)");
             $addUserQuery->execute(array($email,$pass,$salt,$timezone));
 
+           
             echo "You've successfully registered. <a href='../login'>Click here to go log in.</a>";
         }
     }

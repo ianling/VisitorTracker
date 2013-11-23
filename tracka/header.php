@@ -6,4 +6,4 @@ if(!isset($_SESSION['email'])){
 $email = $_SESSION['email'];
 $userID = $_SESSION['userID'];
 echo "<body>";
-echo "<a href='index.php?page=1'>Index</a> - <a href='blocker.php'>Blocker</a> - <a href='settings.php?command=modifysites'>Settings</a> You're logged in as <b>$email</b>! - <a href='../logout.php'>LOGOUT</a><br><br>";
+echo "<span class='navigation'><a href='index.php?page=1'>Index</a> - <a href='blocker.php'>Blocker</a> - <a href='search.php'>Search</a> - <a href='settings.php?command=modifysites'>Settings</a></span> <span style='float:right;' class='greeting'><b>$email</b> - <a href='../logout.php'>LOGOUT</a></span><br><br>";

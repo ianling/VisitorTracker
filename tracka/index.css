@@ -26,7 +26,7 @@ body {
     display:inline-block;
     vertical-align:middle;
     padding:5px;
-    padding-top:0px;
+    padding-top:0;
 }
 .track {
     background-color:#D5D5D5;
@@ -35,6 +35,27 @@ body {
 }
 .divider {
     background-color:#FFFFFF;
+}
+.display-label-options {
+    cursor: pointer;
+    text-decoration: underline;
+}
+.ipLabelSettings {
+    background-color: #b5b5b5;
+    border-style:solid;
+    border-color:black;
+    border-width:1px;
+    z-index:1000;
+    position:absolute;
+    color:#000;
+    margin-left: 7%;
+    margin-top: -1%;
+}
+.save-button {
+    float:left;
+}
+.reset-button {
+    float:right;
 }
 
 .toolbox {
@@ -69,4 +90,16 @@ body {
     cursor: pointer;
     color: blue;
     text-decoration: underline;
+}
+
+.exclusions {
+
+}
+.exclusions-box-label {
+    vertical-align: middle;
+    padding-right: 5px;
+    margin-left: 50px;
+}
+.exclusions-box {
+    vertical-align: middle;
 }

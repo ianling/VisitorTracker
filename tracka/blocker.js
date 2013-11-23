@@ -1,4 +1,4 @@
-$(function() {
+$(document).ready(function() {
     var loadingImage = $('.loadingImage');
     var initialNewJS = $('.jsBox:first').text();
     $('.entryCheckbox').hide();
@@ -40,8 +40,8 @@ $(function() {
             if($(this).children('.entryCheckbox:checked').length > 0) { //This entry has been edited!
                 var thisEntry = $(this);
                 var entryID = thisEntry.data('id');
-                var ip = $(this).children('.ipBox').val();
-                var js = $(this).children('.jsBox').val();
+                var ip = thisEntry.children('.ipBox').val();
+                var js = thisEntry.children('.jsBox').val();
                 $.ajax({
                     url: 'blocker.php',
                     data: {

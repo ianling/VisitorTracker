@@ -8,12 +8,24 @@ $userID = $_POST['id']; //the ID of the user whose page got visited
 $siteID = $_POST['site'];
 
 if(!isset($userID) || !isset($siteID) || !is_numeric($siteID) || !is_numeric($userID) || !isset($_POST['currentpage']) || !is_numeric($_POST['screenh']) || !is_numeric($_POST['screenw'])){
-	die("");
+	die();
 }
 
 date_default_timezone_set('Europe/London'); //UTC
-$browserInfo = get_Browser(null, true); // Initiate info-getting function
 $ipAddress = $_SERVER['REMOTE_ADDR']; //ip
+//FIRST--- Make sure this IP isn't being excluded; we don't need to waste time doing this stuff if they are excluded.
+$exclusionCheckQuery = $db->prepare("SELECT exclusions FROM track_sites WHERE id=? AND userID=?");
+$exclusionCheckQuery->execute(array($siteID,$userID));
+$exclusionsRow = $exclusionCheckQuery->fetch();
+$exclusions = str_replace(" ","",$exclusionsRow['exclusions']);
+$exclusions = str_replace("%","*",$exclusionsRow['exclusions']);
+$exclusions = explode(",", $exclusions);
+foreach($exclusions as $exclusion)
+    if(fnmatch($exclusion,$ipAddress))
+        die();
+
+
+$browserInfo = get_Browser(null, true); // Initiate info-getting function
 $browser = $browserInfo['parent']; //browser
 $operatingSystem = $browserInfo['platform']; //OS
 $operatingSystem = str_replace("Win", "Windows ", $operatingSystem);
